@@ -1,5 +1,10 @@
 #pragma once
 
+#include <iostream>
+
+
+using namespace std;
+
 class StoreMediaInterface {
 public:
     int get_late_fee_per_day_in_dollar() {
@@ -21,14 +26,30 @@ public:
         /*
          * TODO: homework
          */
+        if(this->get_inventory_id() % 13 == 0){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     bool operator==(const StoreMediaInterface &other_media) const {
         /*
          * TODO: homework
          */
-        return false;
-    };
+
+        if(this->get_inventory_id() == other_media.get_inventory_id()) {
+            return true;
+        } else {
+            return false;
+        }
+
+
+    }
+
+
+
+
 
     bool operator!=(const StoreMediaInterface &other_media) const {
         return !(other_media == *this);

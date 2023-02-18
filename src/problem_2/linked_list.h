@@ -37,6 +37,13 @@ public:
         /*
          * TODO: homework
          */
+        ListNode<T> * tmp = other_list.head;
+        for(int i = 0; i < other_list.size(); i++) {
+            tmp = tmp->next;
+            push_back(tmp->val);
+        }
+        num_of_element = other_list.num_of_element;
+
     }
 
     // destructor
