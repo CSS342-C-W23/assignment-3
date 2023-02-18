@@ -18,15 +18,18 @@ public:
     }
 
     virtual bool mercy_rule_apply() {
-        /*
-         * TODO: homework
-         */
+       if( this->inventory_id % 13 == 0)
+       {
+           return true;
+       }
+        return false;
     }
 
     bool operator==(const StoreMediaInterface &other_media) const {
-        /*
-         * TODO: homework
-         */
+        if(this->inventory_id == other_media.inventory_id)
+        {
+            return true;
+        }
         return false;
     };
 
