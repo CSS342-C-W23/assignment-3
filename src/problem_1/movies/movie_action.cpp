@@ -1,9 +1,14 @@
 #include "movie_action.h"
 
 int MovieAction::calculate_late_fees(int num_of_days_past_due) {
-    /*
-     * TODO: homework
-     */
+    if (num_of_days_past_due <= 0 || mercy_rule_apply()) {
+        return 0;
+    }
+    else if (num_of_days_past_due >= 5)
+    {
+        return (late_fee_per_day*2) * num_of_days_past_due;
+    }
+    return late_fee_per_day * num_of_days_past_due;
 }
 
 bool MovieAction::action_movie_mercy_rule_apply() {
