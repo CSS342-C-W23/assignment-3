@@ -18,17 +18,28 @@ public:
     }
 
     virtual bool mercy_rule_apply() {
-        /*
-         * TODO: homework
-         */
+        //According to unit test, this formula is used
+        //to determine if mercy rule is applied
+        //action_movie_mercy_rule_apply()
+        if(get_inventory_id() % 13 == 0){
+            return true;
+        }
+        //Returns false otherwise
+        return false;
     }
 
     bool operator==(const StoreMediaInterface &other_media) const {
-        /*
-         * TODO: homework
-         */
+
+        //Checks if they are the same type of media
+        if(other_media == *this){
+            //Checks if they have the same ID, if so they are the same
+            if(get_inventory_id() == other_media.get_inventory_id()){
+            return true;
+        }
+        //Returns false otherwise
         return false;
-    };
+    }
+    }
 
     bool operator!=(const StoreMediaInterface &other_media) const {
         return !(other_media == *this);

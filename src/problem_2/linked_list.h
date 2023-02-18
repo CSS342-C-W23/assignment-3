@@ -34,9 +34,24 @@ public:
 
     // copy constructor
     LinkedList(const LinkedList<T> &other_list) : LinkedList() {
-        /*
-         * TODO: homework
-         */
+
+        //Copies a given linked list called "other_list"
+        //Setup our linked list
+        head = new ListNode<T>;
+        head = other_list->head;
+        num_of_element = other_list.num_of_element;
+
+        //Pointers used to help travel through both lists
+        ListNode<T> *ptr1 = head->next;
+        ListNode<T> *ptr2 = other_list.head->next;
+
+        //Loops until entire linked list is copied
+        while(ptr2 != nullptr){
+            //Copies over value of current list item
+            ptr1 = ptr2;
+            //Travels to the next item in the list
+            ptr1->next = ptr2->next;
+        }
     }
 
     // destructor
