@@ -118,4 +118,12 @@ void ArrayList<T>::reverse_iterative() {
     /*
      * TODO: homework
      */
+    T *reversed_list = new T[max_capacity];
+    int j = 0;
+    for (int i = num_of_element - 1; i >= 0; i--){
+        reversed_list[j] = data[i];
+        j++;
+    }
+    delete[] data;
+    data = reversed_list;
 }

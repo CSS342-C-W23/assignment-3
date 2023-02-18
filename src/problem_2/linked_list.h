@@ -37,6 +37,16 @@ public:
         /*
          * TODO: homework
          */
+        head = new ListNode<T>();
+        ListNode<T> *self = head;
+        ListNode<T> *current = other_list.head->next;
+        while (current != nullptr){
+            T data = current->val;
+            self->next = new ListNode<T>(data);
+            current = current->next;
+            self = self->next;
+            num_of_element++;
+        }
     }
 
     // destructor
