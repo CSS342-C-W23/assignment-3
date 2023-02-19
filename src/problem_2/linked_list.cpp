@@ -73,15 +73,22 @@ void LinkedList<T>::remove(T &val) {
      * TODO: homework
      */
     ListNode<T> *tmp = head;
-    while (tmp->next != nullptr) {
+    while (tmp != nullptr && tmp->val == val) {
+        head = tmp->next;
+        delete tmp;
+        tmp = head;
+        num_of_element--;
+    }
+    while (tmp != nullptr && tmp->next != nullptr) {
         if (tmp->next->val == val) {
             ListNode<T>* tmp2 = tmp->next;
             tmp->next = tmp2->next;
             delete tmp2;
             num_of_element--;
-            return;
         }
-        tmp = tmp->next;
+        else {
+            tmp = tmp->next;
+        }
     }
 }
 
@@ -94,9 +101,33 @@ void LinkedList<T>::merge(const List<T> &ot) {
      * TODO: homework
      */
 
+    auto &other_list = (LinkedList<T> &) ot;
 
+
+    ListNode<T>* cur1 = head;
+    ListNode<T>* cur2 = other_list.head;
+    while (cur1->next != nullptr && cur2->next != nullptr) {
+        if (cur1->next->val < cur2->next->val) {
+            cur1 = cur1->next;
+        } else {
+            ListNode<T>* tmp = cur1->next;
+            cur1->next = new ListNode<T>(cur2->next->val);
+            cur1->next->next = tmp;
+            cur1 = cur1->next;
+
+            cur2 = cur2->next;
+
+        num_of_element++;
+        }
+    }
+    while(cur2->next != nullptr) {
+        cur2 = cur2->next;
+        push_back(cur2->val);
+    }
 
 }
+
+
 
 template<class T>
 void LinkedList<T>::reverse_iterative() {
