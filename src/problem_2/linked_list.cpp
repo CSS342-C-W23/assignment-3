@@ -30,7 +30,7 @@ void LinkedList<T>::push_back(const T &value) {
     num_of_element++;
 }
 
-
+//ll
 template<class T>
 void LinkedList<T>::pop_back() {
     /*
