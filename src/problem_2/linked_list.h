@@ -115,6 +115,8 @@ public:
     void merge(const List<T> &other) override;
 
     void reverse_iterative() override;
+
+    virtual bool va_list(T& val);
 };
 
 #include "linked_list.cpp"
