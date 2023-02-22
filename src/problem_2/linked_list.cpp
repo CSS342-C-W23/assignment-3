@@ -72,14 +72,21 @@ void LinkedList<T>::remove(T &val) {
     /*
      * TODO: homework
      */
-    ListNode<T> *tmp = head;
-    while (tmp != nullptr && tmp->val == val) {
-        head = tmp->next;
-        delete tmp;
-        tmp = head;
+    while (find(val))
+    {
+        ListNode<T> *tmp = head;
+
+        // tmp stops at node before target or end of list
+        while (tmp->next != nullptr && tmp->next->val != val)
+            tmp = tmp->next;
+
+        ListNode<T> *tmp2 = tmp->next;
+
+        tmp->next = tmp->next->next;
+        delete tmp2;
         num_of_element--;
     }
-    while (tmp != nullptr && tmp->next != nullptr) {
+    /*while (tmp != nullptr && tmp->next != nullptr) {
         if (tmp->next->val == val) {
             ListNode<T>* tmp2 = tmp->next;
             tmp->next = tmp2->next;
@@ -89,7 +96,8 @@ void LinkedList<T>::remove(T &val) {
         else {
             tmp = tmp->next;
         }
-    }
+    }*/
+
 }
 
 /*
@@ -150,4 +158,16 @@ void LinkedList<T>::reverse_iterative() {
         curr = next;
     }
     head->next = prev;
+}
+
+template<class T>
+bool LinkedList<T>::find(T& val) {
+    ListNode<T> *tmp = head;
+    while (tmp->next != nullptr) {
+        tmp = tmp->next;
+        if (tmp->val == val) {
+            return true;
+        }
+    }
+    return false;
 }
