@@ -72,7 +72,7 @@ void LinkedList<T>::remove(T &val) {
     /*
      * TODO: homework
      */
-    while (find(val))
+    while (in_list(val))
     {
         ListNode<T> *tmp = head;
 
@@ -161,7 +161,7 @@ void LinkedList<T>::reverse_iterative() {
 }
 
 template<class T>
-bool LinkedList<T>::find(T& val) {
+bool LinkedList<T>::in_list(T& val) {
     ListNode<T> *tmp = head;
     while (tmp->next != nullptr) {
         tmp = tmp->next;
