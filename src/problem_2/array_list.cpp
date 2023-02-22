@@ -118,4 +118,11 @@ void ArrayList<T>::reverse_iterative() {
     /*
      * TODO: homework
      */
+    int j = num_of_element-1;
+    T temp;
+    for(int i=0; i<j; i++, j--) {
+        temp = data[i];
+        data[i] = data[j];
+        data[j] = temp;
+    }
 }
