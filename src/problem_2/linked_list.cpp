@@ -143,44 +143,47 @@ void LinkedList<T>::merge(const List<T> &ot) {
     /*
      * TODO: homework
      */
-    auto &other_list = (const LinkedList<T> &) ot;
-    const LinkedList<T> *l2 = &other_list;
+
+    // cast List ot into LinkedList type
+    const LinkedList<T> &other_list = dynamic_cast<const LinkedList<T>&>(ot);
+
+    // we will merge them with this new list and assign this linkedlist to point to mergedlist
+    // we will also update the length
+    LinkedList<T> *merged_list = new LinkedList<T>();
+
+    // initialize our pointers to both lists
     ListNode<T> *p1 = head->next;
-    ListNode<T> *p2 = l2->head->next;
-    num_of_element += l2->num_of_element;
-    ListNode<T> *newHead = new ListNode<T>();
-    ListNode<T> *add = newHead;
+    ListNode<T> *p2 = other_list.head->next;
+
+    // add the smaller value of the two until the length of the shortest list
     while (p1 != nullptr && p2 != nullptr) {
         if (p1->val <= p2->val) {
-            add->next = new ListNode<T>(p1->val);
+            merged_list->push_back(p1->val);
             p1 = p1->next;
-            add = add->next;
-
-        } else {
-            add->next = new ListNode<T>(p2->val);
+        }
+        else {
+            merged_list->push_back(p2->val);
             p2 = p2->next;
-            add = add->next;
         }
     }
+
+    // these loops will check for if any, list that still has nodes left
     while (p1 != nullptr) {
-        add->next = new ListNode<T>(p1->val);
-        add = add->next;
+        merged_list->push_back(p1->val);
         p1 = p1->next;
     }
+
     while (p2 != nullptr) {
-        add->next = new ListNode<T>(p2->val);
-        add = add->next;
+        merged_list->push_back(p2->val);
         p2 = p2->next;
     }
-    ListNode<T> *cur = head;
-    ListNode<T> *del = nullptr;
-    while (cur != nullptr) {
-        del = cur;
-        cur = cur->next;
-        delete del;
-    }
-    head = newHead;
 
+    // update this
+    delete head;
+    this->head  = merged_list->head;
+    this->num_of_element = merged_list->num_of_element;
+
+//    delete merged_list;
 }
 
 template<class T>
