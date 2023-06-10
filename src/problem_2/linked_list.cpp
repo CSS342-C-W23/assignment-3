@@ -179,7 +179,11 @@ void LinkedList<T>::merge(const List<T> &ot) {
     }
 
     // update this
-    delete head;
+    while(head != nullptr){
+        ListNode<T>* d = head;
+        head = head->next;
+        delete d;
+    }
     this->head  = merged_list->head;
     this->num_of_element = merged_list->num_of_element;
 
