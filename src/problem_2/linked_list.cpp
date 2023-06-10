@@ -5,6 +5,18 @@ void LinkedList<T>::push_front(const T &value) {
     /*
      * TODO: homework
      */
+
+    // auto is easier to read and will be correct
+    // check if list is empty
+    // else push in front of first node and increment size
+    auto node = new ListNode<T>(value);
+    if (head->next == nullptr) {
+        head->next = node;
+    } else {
+        node->next = head->next;
+        head->next = node;
+    }
+    num_of_element++;
 }
 
 template<class T>
@@ -12,6 +24,25 @@ void LinkedList<T>::push_back(const T &value) {
     /*
      * TODO: homework
      */
+
+    // create new node, iterate the linked list until you are at the end
+    auto node = new ListNode<T>(value);
+    ListNode<T> *curr = head;
+
+    // if list is empty, set head to new node and return
+    if (head == nullptr) {
+        head = node;
+        num_of_element++;
+        return;
+    }
+
+
+    while (curr->next != nullptr) {
+        curr = curr->next;
+    }
+    curr->next = node;
+    num_of_element++;
+
 }
 
 template<class T>
@@ -19,6 +50,31 @@ void LinkedList<T>::pop_back() {
     /*
      * TODO: homework
      */
+
+    // keep track of previous to last to cut node off
+    ListNode<T> *prev = head;
+    ListNode<T> *curr = head->next;
+
+    if (curr == nullptr) {
+        return;
+    }
+
+    // delete only element in the list
+    if (curr->next == nullptr) {
+        head->next = nullptr;
+        delete curr;
+        num_of_element--;
+        return;
+    }
+
+    while (curr->next != nullptr) {
+        prev = curr;
+        curr = curr->next;
+    }
+    prev->next = nullptr;
+    delete curr;
+    num_of_element--;
+
 }
 
 template<class T>
@@ -26,6 +82,25 @@ void LinkedList<T>::pop_front() {
     /*
      * TODO: homework
      */
+    ListNode<T> *curr = head->next;
+
+    if (curr == nullptr) {
+        return;
+    }
+
+    // only element in the list
+    if (curr->next == nullptr) {
+        head->next = nullptr;
+        delete curr;
+        num_of_element--;
+        return;
+    }
+
+    head->next = curr->next;
+    delete curr;
+    num_of_element--;
+
+
 }
 
 template<class T>
@@ -33,6 +108,29 @@ void LinkedList<T>::remove(T &val) {
     /*
      * TODO: homework
      */
+
+    // check if empty list
+    if (num_of_element == 0) {
+        return;
+    }
+
+    // create two pointers, to have access to the previous when we remove
+    ListNode<T> *p1 = head;
+    ListNode<T> *p2 = head->next;
+
+    // iterate the list
+    // remove if you encounter the value node, update nodes and increment
+    while (p2 != nullptr) {
+        if (p2->val == val) {
+            p1->next = p2->next;
+            delete p2;
+            p2 = p1->next;
+            num_of_element--;
+        } else {
+            p1 = p2;
+            p2 = p2->next;
+        }
+    }
 }
 
 /*
@@ -43,6 +141,49 @@ void LinkedList<T>::merge(const List<T> &ot) {
     /*
      * TODO: homework
      */
+
+    // cast List ot into LinkedList type
+
+    auto &other_list = (const LinkedList<T> &) ot;
+    const LinkedList<T> *l2 = &other_list;
+    ListNode<T> *p1 = head->next;
+    ListNode<T> *p2 = l2->head->next;
+    num_of_element += l2->num_of_element;
+    ListNode<T> *newHead = new ListNode<T>();
+    ListNode<T> *add = newHead;
+    while (p1 != nullptr && p2 != nullptr) {
+        if (p1->val <= p2->val) {
+            add->next = new ListNode<T>(p1->val);
+            p1 = p1->next;
+            add = add->next;
+
+        } else {
+            add->next = new ListNode<T>(p2->val);
+            p2 = p2->next;
+            add = add->next;
+        }
+    }
+    while (p1 != nullptr) {
+        add->next = new ListNode<T>(p1->val);
+        add = add->next;
+        p1 = p1->next;
+    }
+    while (p2 != nullptr) {
+        add->next = new ListNode<T>(p2->val);
+        add = add->next;
+        p2 = p2->next;
+    }
+    ListNode<T> *cur = head;
+    ListNode<T> *del = nullptr;
+    while (cur != nullptr) {
+        del = cur;
+        cur = cur->next;
+        delete del;
+    }
+
+    head = newHead;
+
+
 }
 
 template<class T>
@@ -50,4 +191,25 @@ void LinkedList<T>::reverse_iterative() {
     /*
      * TODO: homework
      */
+
+    // checks for lengths of 0, 1 which theres nothing to do in this case
+    if (head->next == nullptr || head->next->next == nullptr) {
+        return;
+    }
+
+    // we want to have access to the previous node at each iteration starting with the second node
+    ListNode<T> *p1 = head->next;
+    ListNode<T> *p2 = p1->next;
+
+    // loop through list
+    // at each iteration that we have two nodes to reverse we will:
+    // swap the direction of the two to be reversed
+    // we will insert the last node to the front and set p2 back to end (p2's original next)
+    while (p2 != nullptr) {
+        p1->next = p2->next;
+        p2->next = head->next;
+        head->next = p2;
+        p2 = p1->next;
+    }
+
 }

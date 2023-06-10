@@ -37,6 +37,12 @@ public:
         /*
          * TODO: homework
          */
+        ListNode<T> *p = other_list.head->next;
+        while (p != nullptr) {
+            push_back(p->val);
+            p = p->next;
+        }
+
     }
 
     // destructor
